@@ -16,8 +16,8 @@ const App = () => {
       // to agar user exists krta h to kuch nhi krna
       // nahi krta h to us  temp docRef me hm new user set kr denge
 
-      let { uid, email } = user;
       if (user) {
+        let { uid, email } = user;
         let docRef = firestore.collection("users").doc(uid);
         let doc = await docRef.get();
 
