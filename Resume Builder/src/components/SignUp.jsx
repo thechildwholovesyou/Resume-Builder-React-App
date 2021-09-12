@@ -1,4 +1,8 @@
+import { useHistory } from "react-router";
+
 let SignUp = () => {
+  let history = useHistory();
+
   return (
     <>
       <form>
@@ -38,7 +42,13 @@ let SignUp = () => {
           SignUp
         </button>
 
-        <button type="submit" class="btn btn-primary m-4">
+        <button
+          type="submit"
+          class="btn btn-primary m-4"
+          onClick={() => {
+            history.push("/login");
+          }}
+        >
           Login
         </button>
       </form>
