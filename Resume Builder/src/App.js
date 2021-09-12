@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { auth } from "./firebase";
 const App = () => {
+  let unsub = useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  // ye susbs dega ... to use unsubscribe b krna pdega
+
   return (
     <>
       <Navbar />
