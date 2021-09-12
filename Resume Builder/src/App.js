@@ -4,11 +4,29 @@ import Navbar from "./components/Navbar";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth, firestore } from "./firebase";
 const App = () => {
   let unsub = useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log(user);
+      // console.log(user);
+
+      // yaha pe hm user naam k object se uski uid and email nikal rahe h 
+      // agar user exists krta hai to uska reference nikal dete h 
+      // we know that agar user nhi h fir bhi ek temp docRef me kuch reference milta h 
+      // to agar user exists krta h to kuch nhi krna 
+      // nahi krta h to us  temp docRef me hm new user set kr denge
+      
+      let { uid, email } = user;
+      if (user) {
+        let docRef = firestore.collection("users").doc(uid);
+        let doc = await docRef.get();
+
+        if (!doc.exists) {
+          docRef.set({
+            email: email,
+          });
+        }
+      }
     });
     return () => {
       unsub();
